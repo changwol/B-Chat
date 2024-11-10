@@ -1,0 +1,33 @@
+.welcome {
+  margin-top: 3%;
+  font-size: 70pt;
+  font: small-caps bold 70px/1 sans-serif;
+}
+.welcomeContainer {
+  display: flex;
+  justify-content: center;
+}
+.iconContainerWithWord {
+  justify-content: center;
+  flex-direction: column;
+}
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+  justify-content: space-around;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.img {
+  width: 90%;
+  object-fit: cover;
+}
+
+.word {
+  font-size: 40pt;
+  text-align: center;
+  font: small-caps bold 70px/1 sans-serif;
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: inherit; /* 링크의 색상 제거 */
+}

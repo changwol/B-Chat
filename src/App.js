@@ -1,39 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import ChatRoom from './Chat/ChatRoom.js';
+import MainPage from './pages/home/mainPage';
+import LoginPage from './pages/login/LoginPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BoardPage from './pages/board/boardPage';
+import ChatPage from './chat/ChatPage';
 
-const LeftComponent = ({ onClick }) => {
-    return (
-        <div className="left-panel">
-            <button onClick={() => onClick("room1")}>ChatRoom 1 열기</button>
-            <button onClick={() => onClick("room2")}>ChatRoom 2 열기</button>
-        </div>
-    );
-};
-
-const RightComponent = ({ chatRoomVisible, data }) => {
-    return (
-        <div className="right-panel">
-            {chatRoomVisible ? <ChatRoom data={data} /> : <h2>ChatRoom이 열리지 않았습니다.</h2>}
-        </div>
-    );
-};
-
-const App = () => {
-    const [chatRoomVisible, setChatRoomVisible] = useState(false);
-    const [data, setData] = useState("");
-
-    const handleChatRoomOpen = (roomId) => {
-        setData(roomId);
-        setChatRoomVisible(true);
-    };
-
-    return (
-        <div className="grid-container">
-            <LeftComponent onClick={handleChatRoomOpen} />
-            <RightComponent chatRoomVisible={chatRoomVisible} data={data} />
-        </div>
-    );
-};
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/board" element={<BoardPage />} />
+      <Route path="/chat" element={<ChatPage />} />
+    </Routes>
+  );
+}
 
 export default App;

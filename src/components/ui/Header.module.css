@@ -1,0 +1,14 @@
+.container {
+  background-color: rgb(43, 129, 175);
+  display: flex;
+}
+.logo_section {
+  width: 90%;
+  display: flex;
+}
+.main_logo {
+  margin: 30%;
+}
+.login_btn {
+  margin: 30%;
+}
