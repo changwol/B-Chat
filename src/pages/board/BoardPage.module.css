@@ -1,3 +1,45 @@
 .container {
-  margin-top: 30px;
+  display: flex; /* Flexbox 사용 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가로 방향 중앙 정렬 */
+  justify-content: center; /* 세로 방향 중앙 정렬 */
+  padding: 10px; /* 선택 사항: 내부 여백 추가 */
+}
+.table {
+  width: 80%;
+  border-collapse: collapse; /* 테두리 간격 제거 */
+  margin: 20px 0;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd; /* 셀 테두리 */
+  padding: 6px; /* 셀 여백 */
+}
+
+.table th {
+  background-color: #f4f4f4; /* 헤더 배경색 */
+  font-weight: bold;
+  text-align: center;
+}
+
+.idColumn {
+  width: 10%; /* ID */
+}
+
+.titleColumn {
+  width: 50%; /* 제목 */
+  text-align: left;
+}
+
+.authorColumn {
+  width: 10%; /* 작성자 */
+}
+
+.dateColumn {
+  width: 5%; /* 날짜 */
+}
+
+.viewColumn {
+  width: 5%; /* 조회수 */
 }
