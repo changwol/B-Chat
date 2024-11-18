@@ -42,6 +42,20 @@ const BoardPage = () => {
       });
   }, [nowPage]); // 현재 페이지 값이 변할때마다 실행
 
+  const boardContentDetail = (id) => {
+    axios
+      .get(`${baseUrl}/board/content/${id}`) // 서버의 상세 정보 API URL
+      .then((response) => {
+        const boardDetail = response.data;
+        console.log(boardDetail); // 데이터를 확인하거나 상태로 관리
+        navigate(`/boardDetail/${id}`, { state: { boardDetail } }); // 상세 페이지로 이동하면서 데이터 전달
+      })
+      .catch((error) => {
+        alert('게시글 정보를 불러오는데 실패했습니다.');
+        console.error(error);
+      });
+  };
+
   return (
     <div>
       <Header />
@@ -59,7 +73,14 @@ const BoardPage = () => {
           <tbody>
             {boardList.map((board, index) => (
               <tr key={index}>
-                <td className={styles.titleColumn}>{board.boardTitle}</td>
+                <td
+                  className={styles.titleColumn}
+                  onClick={() => {
+                    boardContentDetail(board.boardCode);
+                  }}
+                >
+                  {board.boardTitle}
+                </td>
                 <td className={styles.authorColumn}>{board.boardAuthor}</td>
                 <td className={styles.dateColumn}>
                   {board.boardPostDate.slice(0, 10)}

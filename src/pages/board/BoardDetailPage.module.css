@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  max-width: 800px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between; /* 좌측-우측 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  margin-bottom: 20px; /* 제목과 내용 사이에 여백 */
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.body {
+  margin-top: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  height: 500px;
+}
+
+.metadata {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.metadata span {
+  margin-left: 15px;
+}
+
+.button {
+  width: 10%;
+}
+.buttonSection {
+  display: flex;
+  justify-content: right;
+}
