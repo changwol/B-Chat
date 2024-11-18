@@ -60,7 +60,7 @@ const BoardPage = () => {
     <div>
       <Header />
       <div className={styles.container}>
-        {loading && <p>게시글을 불러오는 중...</p>} {/* 로딩 중일 때 메시지 */}
+        {loading && <p>게시글을 불러오는 중...</p>}
         <table className={styles.table}>
           <thead>
             <tr>
