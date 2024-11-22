@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../components/ui/Header";
-import styles from "./MainPage.module.css";
+import styles from "./mainPage.module.css";
 import boardImg from "../../../src/assets/boardIcon.png";
 import chatImg from "../../../src/assets/chatIcon.png";
 import Fade from "react-bootstrap/Fade";

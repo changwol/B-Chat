@@ -30,19 +30,19 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <div className={styles.container}>
-        <h2>Login</h2>
-        <form onSubmit={handleLogin} className={styles.form}>
-          <input type="text" placeholder="User ID" value={userId} onChange={(e) => setUserId(e.target.value)} className={styles.input} />
-          <input type="password" placeholder="PassWord" value={userPassWord} onChange={(e) => setUserPassWord(e.target.value)} className={styles.input} />
-          <button type="submit" className={styles.button}>
-            Login
-          </button>
-        </form>
+      <div>
+        <Header />
+        <div className={styles.container}>
+          <h2>Login</h2>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <input type="text" placeholder="User ID" value={userId} onChange={(e) => setUserId(e.target.value)} className={styles.input} />
+            <input type="password" placeholder="PassWord" value={userPassWord} onChange={(e) => setUserPassWord(e.target.value)} className={styles.input} />
+            <button type="submit" className={styles.button}>
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
   );
 };
 

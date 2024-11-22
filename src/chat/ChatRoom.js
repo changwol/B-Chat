@@ -6,17 +6,23 @@ const ChatRoom = (props) => {
     const [content, setContent] = useState('');
     const [senderName, setSenderName] = useState('');
     const [messages, setMessages] = useState([]);
-    // console.log("roomId : ",props.data);
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const roomId = props.data;
 
     const fetchInitialMessages = async (roomId) => {
         try {
             const response = await fetch(`http://localhost:8080/rooms/${roomId}/findMessage`);
+            if (!response.ok) {
+                throw new Error('메시지를 가져오는 데 실패했습니다.');
+            }
             const result = await response.json();
             setMessages(result);
         } catch (error) {
             console.error("문제 발생 :", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -32,6 +38,9 @@ const ChatRoom = (props) => {
                     console.log('메세지 :', receivedMessage);
                     setMessages(prevMessages => [...prevMessages, receivedMessage]);
                 });
+            },
+            onStompError: (frame) => {
+                console.error('STOMP 에러:', frame.headers['message']);
             },
         });
 
@@ -56,9 +65,9 @@ const ChatRoom = (props) => {
                 body: JSON.stringify(payload),
             });
             console.log('메시지가 전송 완료:', payload);
-            setContent('');
+            setContent(''); // 메시지 전송 후 입력 필드 초기화
         } else {
-            console.error('웹소켓 오류');
+            console.error('웹소켓 연결이 되어 있지 않습니다.');
         }
     };
 
@@ -78,6 +87,9 @@ const ChatRoom = (props) => {
                 placeholder="메시지를 입력하세요"
             />
             <button onClick={sendMessage}>메시지 보내기</button>
+
+            {loading && <p>로딩 중...</p>}
+            {error && <p className="error-message">{error}</p>}
 
             <div>
                 <h2>수신한 메시지</h2>
