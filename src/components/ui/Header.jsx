@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import styles from './Header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const token = localStorage.getItem('Authorization');
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    alert('로그아웃 되었습니다.');
+    navigate('/');
+  };
 
   return (
     <div>
@@ -17,11 +24,20 @@ const Header = () => {
           </Link>
         </div>
         {token != null ? (
-          <Link to="/mypage">
-            <Button variant="outline-light" className={styles.myPage_btn}>
-              My Page
+          <>
+            <Link to="/mypage">
+              <Button variant="outline-light" className={styles.myPage_btn}>
+                My Page
+              </Button>
+            </Link>
+            <Button
+              variant="outline-light"
+              className={styles.myPage_btn}
+              onClick={logout}
+            >
+              Log Out
             </Button>
-          </Link>
+          </>
         ) : (
           <Link to="/login">
             <Button variant="outline-light" className={styles.login_btn}>
