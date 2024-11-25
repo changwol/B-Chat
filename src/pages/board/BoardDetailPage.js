@@ -5,8 +5,12 @@ import styles from './BoardDetailPage.module.css';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 const BoardDetailPage = () => {
+  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+  const [password, setPassword] = useState(''); // 비밀번호 상태
   const baseUrl = 'http://localhost:8080';
   const location = useLocation();
   const token = localStorage.getItem('Authorization'); // 주의: 'Authorization' 스펠링 확인
@@ -21,6 +25,39 @@ const BoardDetailPage = () => {
 
   const goToUpdatePage = () => {
     navigate(`/boardUpdate`, { state: { boardDetail } }); // 상세 페이지로 이동하면서 데이터 전달);
+  };
+
+  const handleDeleteClick = () => {
+    setShowModal(true); // 모달 표시
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false); // 모달 닫기
+    setPassword(''); // 비밀번호 초기화
+  };
+
+  const handlePasswordSubmit = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.delete(`${baseUrl}/board/content`, {
+        headers: {
+          Authorization: token,
+        },
+        data: {
+          boardCode: boardDetail.boardCode,
+          memberPassword: password, // 비밀번호를 서버로 전달
+        },
+      });
+      console.log('삭제 성공:', response.data);
+      alert('게시글이 삭제되었습니다.');
+      navigate('/board');
+    } catch (error) {
+      console.error('삭제 실패:', error);
+      alert('삭제에 실패했습니다. 비밀번호를 확인해주세요.');
+    } finally {
+      setLoading(false);
+      handleModalClose();
+    }
   };
 
   useEffect(() => {
@@ -82,7 +119,7 @@ const BoardDetailPage = () => {
               </Button>
               <Button
                 variant="outline-dark"
-                onClick={goToBoardList}
+                onClick={handleDeleteClick}
                 className={styles.button}
               >
                 삭제
@@ -93,6 +130,37 @@ const BoardDetailPage = () => {
           )}
         </div>
       </div>
+
+      <Modal show={showModal} onHide={handleModalClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>게시글 삭제</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="passwordInput">
+              <Form.Label>비밀번호</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} // 비밀번호 상태 업데이트
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            취소
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handlePasswordSubmit}
+            disabled={loading || !password} // 비밀번호 없을 때 비활성화
+          >
+            삭제
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
