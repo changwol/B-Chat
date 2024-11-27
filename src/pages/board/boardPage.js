@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Header from '../../components/ui/Header';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styles from './BoardPage.module.css';
+import React, { useState, useEffect } from "react";
+import Header from "../../components/ui/Header";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styles from "./BoardPage.module.css";
 
 const BoardPage = () => {
-  const baseUrl = 'http://localhost:8080';
+  const baseUrl = "http://localhost:8080";
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [nowPage, setNowPage] = useState(1);
@@ -16,13 +16,13 @@ const BoardPage = () => {
 
   const postButtonHandelr = () => {
     // 간단한 토큰 검증 메서드
-    const token = localStorage.getItem('Authorization');
+    const token = localStorage.getItem("Authorization");
     if (token) {
       // 예: 토큰이 존재하면 통과로 간주
       setIsAuthorized(true);
     } else {
-      alert('로그인이 필요합니다.');
-      navigate('/login');
+      alert("로그인이 필요합니다.");
+      navigate("/login");
     }
   };
 
@@ -30,12 +30,12 @@ const BoardPage = () => {
     // 게시글 목록을 서버에서 불러오는 요청
     setLoading(true);
     axios
-      .get(baseUrl + '/board/content/list?page=' + nowPage) // 실제 API URL을 입력하세요.
+      .get(baseUrl + "/board/content/list?page=" + nowPage) // 실제 API URL을 입력하세요.
       .then((response) => {
         setBoardList(response.data.data); // 게시글 목록을 상태에 저장
       })
       .catch((error) => {
-        alert('에러가 발생하였습니다.');
+        alert("에러가 발생하였습니다.");
       })
       .finally(() => {
         setLoading(false);
@@ -51,7 +51,7 @@ const BoardPage = () => {
         navigate(`/boardDetail/${id}`, { state: { boardDetail } }); // 상세 페이지로 이동하면서 데이터 전달
       })
       .catch((error) => {
-        alert('게시글 정보를 불러오는데 실패했습니다.');
+        alert("게시글 정보를 불러오는데 실패했습니다.");
         console.error(error);
       });
   };
@@ -82,9 +82,7 @@ const BoardPage = () => {
                   {board.boardTitle}
                 </td>
                 <td className={styles.authorColumn}>{board.boardAuthor}</td>
-                <td className={styles.dateColumn}>
-                  {board.boardPostDate.slice(0, 10)}
-                </td>
+                <td className={styles.dateColumn}>{board.boardPostDate.slice(0, 10)}</td>
                 <td className={styles.viewColumn}>{board.boardView}</td>
               </tr>
             ))}
