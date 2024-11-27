@@ -7,6 +7,36 @@
     text-align: center; /* 텍스트를 가운데 정렬합니다 */
     color: #fff; /* 텍스트 색상을 흰색으로 변경합니다 */
 }
+.left-panel {
+    max-height: 400px; /* 원하는 최대 높이 설정 */
+    overflow-y: auto;  /* 수직 스크롤 활성화 */
+    border: 1px solid #ccc; /* 경계선 추가 (옵션) */
+    padding: 20px; /* 여백 추가 (옵션) */
+}
+
+.search-results {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-height: 300px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 스크롤 가능 */
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+.search-result-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #eee; /* 구분선 */
+}
+
+.search-result-item:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+}
+
+.search-result-item:last-child {
+    border-bottom: none; /* 마지막 항목의 구분선 제거 */
+}
 
 .num-1 {
     background-color: #FF4136; /* 숫자 1의 색상: 빨간색 */

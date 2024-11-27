@@ -1,14 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import MainPage from './pages/home/MainPage';
+import MainPage from './pages/home/mainPage';
 import LoginPage from './pages/login/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BoardPage from './pages/board/BoardPage';
+import BoardPage from './pages/board/boardPage';
 import BoardPostPage from './pages/board/BoardPostPage';
 import BoardDetailPage from './pages/board/BoardDetailPage';
 import MyPage from './pages/mypage/MyPage';
+
 import ChatPage from './chat/ChatPage';
+import Test from './chat/Test';
+
 import BoardUpdatePage from './pages/board/BoardUpdatePage';
+
 
 function App() {
   return (
@@ -20,6 +24,7 @@ function App() {
       <Route path="/boardPost" element={<BoardPostPage />} />
       <Route path="/boardDetail/:id" element={<BoardDetailPage />} />
       <Route path="/mypage" element={<MyPage />} />
+        <Route path="/test" element={<Test />} />
       <Route path="/boardUpdate" element={<BoardUpdatePage />} />
     </Routes>
   );

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Client } from '@stomp/stompjs';
 
-const ChatRoom = (props) => {
+const ChatRoom = ({ data: roomId , senderId, senderName: senderName }) => { // props를 구조 분해 할당
     const [client, setClient] = useState(null);
     const [content, setContent] = useState('');
-    const [senderName, setSenderName] = useState('');
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const roomId = props.data;
-
     const fetchInitialMessages = async (roomId) => {
         try {
             const response = await fetch(`http://localhost:8080/rooms/${roomId}/findMessage`);
@@ -58,10 +55,11 @@ const ChatRoom = (props) => {
                 senderName: senderName,
                 roomId: roomId,
                 content: content,
+                senderId: senderId,
             };
 
             client.publish({
-                destination: '/pub/message',
+                destination: '/app/message',
                 body: JSON.stringify(payload),
             });
             console.log('메시지가 전송 완료:', payload);
@@ -74,12 +72,6 @@ const ChatRoom = (props) => {
     return (
         <div>
             <h1>WebSocket with STOMP</h1>
-            <input
-                type="text"
-                value={senderName}
-                onChange={(e) => setSenderName(e.target.value)}
-                placeholder="보내는 사람 이름"
-            />
             <input
                 type="text"
                 value={content}
