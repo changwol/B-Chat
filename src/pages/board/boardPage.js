@@ -4,21 +4,21 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Pagination from "react-bootstrap/Pagination"; // Pagination 컴포넌트 임포트
 import styles from "./BoardPage.module.css";
 
 const BoardPage = () => {
   const baseUrl = "http://localhost:8080";
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [nowPage, setNowPage] = useState(1);
+  const [nowPage, setNowPage] = useState(1); // 현재 페이지 상태
+  const [totalPages, setTotalPages] = useState(0); // 총 페이지 수 상태
   const [boardList, setBoardList] = useState([]); // 게시글 목록 상태 추가
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
 
   const postButtonHandelr = () => {
-    // 간단한 토큰 검증 메서드
     const token = localStorage.getItem("Authorization");
     if (token) {
-      // 예: 토큰이 존재하면 통과로 간주
       setIsAuthorized(true);
     } else {
       alert("로그인이 필요합니다.");
@@ -27,12 +27,12 @@ const BoardPage = () => {
   };
 
   useEffect(() => {
-    // 게시글 목록을 서버에서 불러오는 요청
     setLoading(true);
     axios
-      .get(baseUrl + "/board/content/list?page=" + nowPage) // 실제 API URL을 입력하세요.
+      .get(`${baseUrl}/board/content/list?page=${nowPage}`)
       .then((response) => {
-        setBoardList(response.data.data); // 게시글 목록을 상태에 저장
+        setBoardList(response.data.data); // 게시글 목록 상태에 저장
+        setTotalPages(response.data.boardContentCount); // 총 페이지 수 저장 (예: API 응답에서 제공)
       })
       .catch((error) => {
         alert("에러가 발생하였습니다.");
@@ -40,20 +40,38 @@ const BoardPage = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [nowPage]); // 현재 페이지 값이 변할때마다 실행
+  }, [nowPage]);
 
   const boardContentDetail = (id) => {
     axios
-      .get(`${baseUrl}/board/content/${id}`) // 서버의 상세 정보 API URL
+      .get(`${baseUrl}/board/content/${id}`)
       .then((response) => {
         const boardDetail = response.data;
-        console.log(boardDetail); // 데이터를 확인하거나 상태로 관리
-        navigate(`/boardDetail/${id}`, { state: { boardDetail } }); // 상세 페이지로 이동하면서 데이터 전달
+        console.log(boardDetail);
+        navigate(`/boardDetail/${id}`, { state: { boardDetail } });
       })
       .catch((error) => {
         alert("게시글 정보를 불러오는데 실패했습니다.");
         console.error(error);
       });
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setNowPage(pageNumber); // 페이지 번호 변경
+  };
+
+  const renderPagination = () => {
+    const pages = [];
+    const plusCount = totalPages % 20 === 0 ? 0 : 1;
+    const pageCount = totalPages / 20 + plusCount;
+    for (let i = 1; i <= pageCount; i++) {
+      pages.push(
+        <Pagination.Item key={i} active={i === nowPage} onClick={() => handlePageChange(i)}>
+          {i}
+        </Pagination.Item>
+      );
+    }
+    return pages;
   };
 
   return (
@@ -73,12 +91,7 @@ const BoardPage = () => {
           <tbody>
             {boardList.map((board, index) => (
               <tr key={index}>
-                <td
-                  className={styles.titleColumn}
-                  onClick={() => {
-                    boardContentDetail(board.boardCode);
-                  }}
-                >
+                <td className={styles.titleColumn} onClick={() => boardContentDetail(board.boardCode)}>
                   {board.boardTitle}
                 </td>
                 <td className={styles.authorColumn}>{board.boardAuthor}</td>
@@ -97,6 +110,13 @@ const BoardPage = () => {
             글쓰기
           </Button>
         )}
+
+        {/* 페이지네이션 */}
+        <Pagination>
+          <Pagination.Prev onClick={() => nowPage > 1 && handlePageChange(nowPage - 1)} />
+          {renderPagination()}
+          <Pagination.Next onClick={() => nowPage < totalPages && handlePageChange(nowPage + 1)} />
+        </Pagination>
       </div>
     </div>
   );
