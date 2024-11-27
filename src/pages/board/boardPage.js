@@ -106,9 +106,11 @@ const BoardPage = () => {
             <Button variant="outline-dark">글쓰기</Button>
           </Link>
         ) : (
-          <Button variant="outline-dark" onClick={postButtonHandelr}>
-            글쓰기
-          </Button>
+          <div className={styles.postButton}>
+            <Button variant="outline-dark" onClick={postButtonHandelr}>
+              글쓰기
+            </Button>
+          </div>
         )}
 
         {/* 페이지네이션 */}
