@@ -31,15 +31,24 @@
   width: 50%; /* 제목 */
   text-align: left;
 }
+.titleColumn:hover {
+  background-color: #d6e6ee;
+  cursor: pointer;
+}
 
 .authorColumn {
   width: 10%; /* 작성자 */
 }
 
 .dateColumn {
-  width: 5%; /* 날짜 */
+  width: 10%; /* 날짜 */
 }
 
 .viewColumn {
   width: 5%; /* 조회수 */
+}
+
+.postButton {
+  align-items: flex-end;
+  margin: 10px;
 }

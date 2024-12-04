@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/ui/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styles from './MyPage.module.css';
 
 const MyPage = () => {
   const baseUrl = 'http://localhost:8080';
@@ -39,14 +40,50 @@ const MyPage = () => {
   return (
     <div>
       <Header />
-      <div>
-        <h1>내 정보</h1>
+      <div className={styles.container}>
+        <div className={styles.header}>내 정보</div>
         {memberData ? (
-          <div>
-            <p>이름: {memberData.memberId}</p>
-            <p>이메일: {memberData.memberEmail}</p>
-            <p>전화번호: {memberData.memberTel}</p>
-            {/* 필요에 따라 다른 사용자 정보 추가 */}
+          <div className={styles.infoSection}>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>아이디</span>
+              <span className={styles.infoValue}>{memberData.memberId}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>이름</span>
+              <span className={styles.infoValue}>{memberData.memberName}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>이메일</span>
+              <span className={styles.infoValue}>{memberData.memberEmail}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>전화번호</span>
+              <span className={styles.infoValue}>{memberData.memberTel}</span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>학번</span>
+              <span className={styles.infoValue}>
+                {memberData.memberStudentNumber}
+              </span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>등록일</span>
+              <span className={styles.infoValue}>
+                {memberData.memberRegDate}
+              </span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>생년월일</span>
+              <span className={styles.infoValue}>
+                {memberData.memberBirthDate}
+              </span>
+            </div>
+            <div className={styles.infoItem}>
+              <span className={styles.infoLabel}>성별</span>
+              <span className={styles.infoValue}>
+                {memberData.memberSex ? '남성' : '여성'}
+              </span>
+            </div>
           </div>
         ) : (
           <p>사용자 정보를 불러오는 중...</p>

@@ -29,6 +29,10 @@ const LoginPage = () => {
     }
   };
 
+  const singUp = () => {
+    navigate("/signUp");
+  };
+
   return (
     <div>
       <Header />
@@ -39,6 +43,9 @@ const LoginPage = () => {
           <input type="password" placeholder="PassWord" value={userPassWord} onChange={(e) => setUserPassWord(e.target.value)} className={styles.input} />
           <button type="submit" className={styles.button}>
             Login
+          </button>
+          <button onClick={singUp} className={styles.button}>
+            Sign up
           </button>
         </form>
       </div>
