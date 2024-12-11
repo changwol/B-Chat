@@ -6,7 +6,7 @@ import axios from "axios";
 
 import {Client} from '@stomp/stompjs'
 
-const baseUrl = "http://b-link.kro.kr:8080/room";
+const baseUrl = "b-link.kro.kr:8080";
 
 const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchClear, handleCreateChatRoom}) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -112,7 +112,7 @@ const ChatPage = () => {
         if (!memberData) return; // memberData가 없으면 요청하지 않음
         setLoadingRooms(true); // 방 ID 로딩 시작
         try {
-            const response = await fetch(`${baseUrl}/find/${memberData}/findRoom`);
+            const response = await fetch(`http://${baseUrl}/room/find/${memberData}/findRoom`);
             if (!response.ok) {
                 throw new Error("Network response was not ok");
             }
@@ -128,7 +128,7 @@ const ChatPage = () => {
         const token = localStorage.getItem("Authorization");
         setLoadingUser(true); // 사용자 데이터 로딩 시작
         try {
-            const response = await axios.get(`${baseUrl}/memberId`, {
+            const response = await axios.get(`http://${baseUrl}/room/memberId`, {
                 headers: {
                     Authorization: token,
                 },
@@ -160,7 +160,7 @@ const ChatPage = () => {
         const fetchUserName = async () => {
             setLoadingUser(true); // 사용자 데이터 로딩 시작
             try {
-                const response = await axios.get(`${baseUrl}/memberName`, {
+                const response = await axios.get(`http://${baseUrl}/room/memberName`, {
                     headers: {
                         Authorization: token,
                     },
@@ -172,7 +172,6 @@ const ChatPage = () => {
                     navigate('/login'); // 로그인 페이지로 리다이렉트
                 }
             } catch (error) {
-                // setErrorMessage("데이터를 불러오는 데 실패했습니다.");
                 console.error("Error:", error);
             } finally {
                 setLoadingUser(false); // 사용자 데이터 로딩 종료
@@ -188,11 +187,11 @@ const ChatPage = () => {
             brokerURL: `ws://${baseUrl}/ws`,
             onConnect: () => {
                 console.log('웹소켓 성공');
-                stompClient.subscribe(`/sub/addRoom/${memberData}`, message => {
-                    const roomData = JSON.parse(message.body);
-                    console.log('메세지 :', roomData);
-                    setRoomInfos(prevMessages => [...prevMessages, roomData]);
-                });
+                // stompClient.subscribe(`/sub/addRoom/${memberData}`, message => {
+                //     const roomData = JSON.parse(message.body);
+                //     console.log('메세지 :', roomData);
+                //     setRoomInfos(prevMessages => [...prevMessages, roomData]);
+                // });
             },
             onStompError: (frame) => {
                 console.error('STOMP 에러:', frame.headers['message']);
@@ -207,7 +206,7 @@ const ChatPage = () => {
     const handleSearch = async (searchTerm) => {
         if (searchTerm) {
             try {
-                const response = await axios.get(`${baseUrl}/user/${searchTerm}`);
+                const response = await axios.get(`http://${baseUrl}/room/user/${searchTerm}`);
                 if (Array.isArray(response.data)) {
                     const formattedData = response.data.map(member => ({
                         memberId: member.memberId,
