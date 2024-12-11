@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import MainPage from "./pages/home/MainPage";
+import MainPage from "./pages/home/mainPage";
 import LoginPage from "./pages/login/LoginPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BoardPage from "./pages/board/BoardPage";
+import BoardPage from "./pages/board/boardPage";
 import BoardPostPage from "./pages/board/BoardPostPage";
 import BoardDetailPage from "./pages/board/BoardDetailPage";
 import MyPage from "./pages/mypage/MyPage";

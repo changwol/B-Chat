@@ -26,7 +26,7 @@ const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchCl
             {/* 검색 입력창 */}
             <input
                 type="text"
-                placeholder="방 이름 검색..."
+                placeholder="검색"
                 value={searchTerm}
                 onChange={onSearchChange}
                 style={{
@@ -36,7 +36,7 @@ const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchCl
                     borderRadius: '5px',
                     border: '1px solid #ccc'
                 }}
-                onFocus={handleClick} // 검색창 포커스 시 초기화
+                // onClick={handleClick} // 검색창 포커스 시 초기화
             />
 
             {/* 검색 결과 */}
@@ -47,21 +47,24 @@ const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchCl
                             <div
                                 key={memberId}
                                 className="search-result-item"
-                                onClick={() => handleCreateChatRoom(memberId, memberName)} // 수정된 부분
+                                onClick={() => {
+                                    handleCreateChatRoom(memberId, memberName);
+                                    handleClick();
+                                }} // 수정된 부분
                             >
-                                {`Member: ${memberName} (ID: ${memberId})`}
+                                {`Member: ${memberName}`}
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p>검색 결과가 없습니다.</p>
+                    <p></p>
                 )}
             </div>
             {/* 방 정보 버튼 */}
             {roomInfos && roomInfos.length > 0 ? (
                 roomInfos.map(({id, roomName}) => (
                     <button key={id} onClick={() => onClick(id)}>
-                        {`ChatRoom ${roomName} (${id}) 열기`}
+                        {`${roomName}`}
                     </button>
                 ))
             ) : (
@@ -103,7 +106,7 @@ const ChatPage = () => {
     const [memberName, setMemberName] = useState(null);
     const [memberId, setMemberId] = useState(null);
     const [loadingRooms, setLoadingRooms] = useState(false);
-    const [roomId, setRoomId]=useState(null);
+    const [roomId, setRoomId] = useState(null);
 
     const fetchRoomIds = async () => {
         if (!memberData) return; // memberData가 없으면 요청하지 않음
@@ -169,7 +172,7 @@ const ChatPage = () => {
                     navigate('/login'); // 로그인 페이지로 리다이렉트
                 }
             } catch (error) {
-                setErrorMessage("데이터를 불러오는 데 실패했습니다.");
+                // setErrorMessage("데이터를 불러오는 데 실패했습니다.");
                 console.error("Error:", error);
             } finally {
                 setLoadingUser(false); // 사용자 데이터 로딩 종료
@@ -219,7 +222,6 @@ const ChatPage = () => {
                 console.error("검색 중 오류 발생:", error);
             }
         } else {
-            // 검색어가 비어있을 때는 검색 결과를 초기화하지 않음
             console.log("검색어가 비어있습니다.");
         }
     };
@@ -250,7 +252,7 @@ const ChatPage = () => {
     };
 
 
-    const handleChatRoomOpen = (roomId,id, name) => {
+    const handleChatRoomOpen = (roomId, id, name) => {
         setRoomId(roomId);
         setMemberId(id);
         setMemberName(name);

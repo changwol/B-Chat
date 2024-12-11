@@ -71,7 +71,7 @@ const ChatRoom = ({ data: roomId , senderId, senderName: senderName }) => { // p
 
     return (
         <div>
-            <h1>WebSocket with STOMP</h1>
+            {/*<h1>WebSocket with STOMP</h1>*/}
             <input
                 type="text"
                 value={content}
