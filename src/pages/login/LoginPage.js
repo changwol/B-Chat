@@ -7,7 +7,7 @@ import axios from "axios";
 const LoginPage = () => {
   const [userId, setUserId] = useState("");
   const [userPassWord, setUserPassWord] = useState("");
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://b-link.kro.kr:8080";
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {

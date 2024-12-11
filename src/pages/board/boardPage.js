@@ -8,7 +8,7 @@ import Pagination from "react-bootstrap/Pagination"; // Pagination 컴포넌트 
 import styles from "./BoardPage.module.css";
 
 const BoardPage = () => {
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://b-link.kro.kr:8080";
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [nowPage, setNowPage] = useState(1); // 현재 페이지 상태

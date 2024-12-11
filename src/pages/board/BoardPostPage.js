@@ -8,7 +8,7 @@ import axios from "axios";
 
 const BoardPostPage = () => {
   const navigate = useNavigate();
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://b-link.kro.kr:8080";
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 

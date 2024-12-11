@@ -7,9 +7,10 @@ const ChatRoom = ({ data: roomId , senderId, senderName: senderName }) => { // p
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseUrl = "b-link.kro.kr:8080"
     const fetchInitialMessages = async (roomId) => {
         try {
-            const response = await fetch(`http://localhost:8080/rooms/${roomId}/findMessage`);
+            const response = await fetch(`http://${baseUrl}/rooms/${roomId}/findMessage`);
             if (!response.ok) {
                 throw new Error('메시지를 가져오는 데 실패했습니다.');
             }
@@ -27,7 +28,7 @@ const ChatRoom = ({ data: roomId , senderId, senderName: senderName }) => { // p
         fetchInitialMessages(roomId); // 초기 메시지를 가져옵니다.
 
         const stompClient = new Client({
-            brokerURL: 'ws://localhost:8080/ws',
+            brokerURL: `ws://${baseUrl}/ws`,
             onConnect: () => {
                 console.log('웹소켓 성공');
                 stompClient.subscribe(`/sub/rooms/${roomId}`, message => {

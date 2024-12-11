@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './MyPage.module.css';
 
 const MyPage = () => {
-  const baseUrl = 'http://localhost:8080';
+  const baseUrl = 'http://b-link.kro.kr:8080';
   const token = localStorage.getItem('Authorization'); // 로컬 스토리지에서 토큰 가져오기
   const navigate = useNavigate();
   const [memberData, setMemberData] = useState(null); // 사용자 정보 상태

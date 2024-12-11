@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styles from "./SignUp.module.css";
 import axios from "axios";
 import Header from "../../components/ui/Header";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [memberId, setMemberId] = useState("");
   const [isIdAvailable, setIsIdAvailable] = useState(null);
   const [memberPassWord, setMemberPassword] = useState("");
@@ -17,7 +19,7 @@ const SignUp = () => {
   const [memberBirthDate, setMemberBirthdate] = useState("");
   const [memberSex, setMemberSex] = useState("true");
 
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://b-link.kro.kr:8080";
 
   // ID 중복체크 메서드
   const checkIdAvailability = async () => {
@@ -99,10 +101,10 @@ const SignUp = () => {
     try {
       const response = await axios.post(`${baseUrl}/member/join`, requestData);
       alert("회원가입이 완료되었습니다!");
-      navigator("/login");
+      navigate("/login");
     } catch (error) {
       console.error("회원가입 실패:", error);
-      // alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      navigate("/login");
     }
   };
 

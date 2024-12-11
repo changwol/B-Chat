@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const BoardUpdatePage = () => {
   const navigate = useNavigate();
-  const baseUrl = 'http://localhost:8080';
+  const baseUrl = 'http://b-link.kro.kr:8080';
   const location = useLocation();
   const { boardDetail } = location.state || {}; // undefined 대비 초기값 설정
   const [title, setTitle] = useState('');

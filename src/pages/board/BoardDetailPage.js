@@ -11,7 +11,7 @@ import Form from "react-bootstrap/Form";
 const BoardDetailPage = () => {
   const [showModal, setShowModal] = useState(false); // 모달 표시 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
-  const baseUrl = "http://localhost:8080";
+  const baseUrl = "http://b-link.kro.kr:8080";
   const location = useLocation();
   const token = localStorage.getItem("Authorization"); // JWT 토큰
   const navigate = useNavigate();

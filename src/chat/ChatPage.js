@@ -6,7 +6,7 @@ import axios from "axios";
 
 import {Client} from '@stomp/stompjs'
 
-const baseUrl = "http://127.0.0.1:8080/room";
+const baseUrl = "http://b-link.kro.kr:8080/room";
 
 const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchClear, handleCreateChatRoom}) => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -185,7 +185,7 @@ const ChatPage = () => {
     // 방 ID 가져오기
     useEffect(() => {
         const stompClient = new Client({
-            brokerURL: 'ws://localhost:8080/ws',
+            brokerURL: `ws://${baseUrl}/ws`,
             onConnect: () => {
                 console.log('웹소켓 성공');
                 stompClient.subscribe(`/sub/addRoom/${memberData}`, message => {
