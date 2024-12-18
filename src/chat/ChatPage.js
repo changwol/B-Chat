@@ -3,8 +3,8 @@ import "./ChatPage.css";
 import ChatRoom from "./ChatRoom.js";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-
 import {Client} from '@stomp/stompjs'
+import Header from "../components/ui/Header.jsx";
 
 const baseUrl = "b-link.kro.kr:8080";
 
@@ -22,54 +22,59 @@ const LeftComponent = ({roomInfos, searchData, onClick, handleSearch, onSearchCl
     };
 
     return (
-        <div className="left-panel">
-            {/* 검색 입력창 */}
-            <input
-                type="text"
-                placeholder="검색"
-                value={searchTerm}
-                onChange={onSearchChange}
-                style={{
-                    width: '100%',
-                    padding: '8px',
-                    marginBottom: '10px',
-                    borderRadius: '5px',
-                    border: '1px solid #ccc'
-                }}
-                // onClick={handleClick} // 검색창 포커스 시 초기화
-            />
+        <div>
 
-            {/* 검색 결과 */}
-            <div style={{position: 'relative'}}>
-                {searchData && searchData.length > 0 ? (
-                    <div className="search-results">
-                        {searchData.map(({memberId, memberName}) => (
-                            <div
-                                key={memberId}
-                                className="search-result-item"
-                                onClick={() => {
-                                    handleCreateChatRoom(memberId, memberName);
-                                    handleClick();
-                                }} // 수정된 부분
-                            >
-                                {`Member: ${memberName}`}
+            <div>
+                <div className="left-panel">
+                    {/* 검색 입력창 */}
+                    <input
+                        type="text"
+                        placeholder="검색"
+                        value={searchTerm}
+                        onChange={onSearchChange}
+                        style={{
+                            width: '100%',
+                            padding: '8px',
+                            marginBottom: '10px',
+                            borderRadius: '5px',
+                            border: '1px solid #ccc'
+                        }}
+                        // onClick={handleClick} // 검색창 포커스 시 초기화
+                    />
+
+                    {/* 검색 결과 */}
+                    <div style={{position: 'relative'}}>
+                        {searchData && searchData.length > 0 ? (
+                            <div className="search-results">
+                                {searchData.map(({memberId, memberName}) => (
+                                    <div
+                                        key={memberId}
+                                        className="search-result-item"
+                                        onClick={() => {
+                                            handleCreateChatRoom(memberId, memberName);
+                                            handleClick();
+                                        }} // 수정된 부분
+                                    >
+                                        {`Member: ${memberName}`}
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        ) : (
+                            <p></p>
+                        )}
                     </div>
-                ) : (
-                    <p></p>
-                )}
+                    {/* 방 정보 버튼 */}
+                    {roomInfos && roomInfos.length > 0 ? (
+                        roomInfos.map(({id, roomName}) => (
+                            <button key={id} onClick={() => onClick(id)}>
+                                {`${roomName}`}
+                            </button>
+                        ))
+                    ) : (
+                        <p>방이 없습니다.</p>
+                    )}
+                </div>
             </div>
-            {/* 방 정보 버튼 */}
-            {roomInfos && roomInfos.length > 0 ? (
-                roomInfos.map(({id, roomName}) => (
-                    <button key={id} onClick={() => onClick(id)}>
-                        {`${roomName}`}
-                    </button>
-                ))
-            ) : (
-                <p>방이 없습니다.</p>
-            )}
         </div>
     );
 };
@@ -260,23 +265,27 @@ const ChatPage = () => {
 
 
     return (
-        <div className="grid-container">
-            {loadingUser && <p>Loading...</p>}
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <LeftComponent
-                roomInfos={roomInfos}
-                searchData={searchData}
-                onClick={handleChatRoomOpen}
-                handleSearch={handleSearch}
-                onSearchClear={handleSearchClear} // 검색 초기화 함수 전달
-                handleCreateChatRoom={handleCreateChatRoom}
-            />
-            <RightComponent
-                chatRoomVisible={chatRoomVisible}
-                roomId={roomId}
-                senderId={senderId}
-                senderName={senderName}/>
+        <div>
+            <Header/>
+            <div className="grid-container">
+                {loadingUser && <p>Loading...</p>}
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <LeftComponent
+                    roomInfos={roomInfos}
+                    searchData={searchData}
+                    onClick={handleChatRoomOpen}
+                    handleSearch={handleSearch}
+                    onSearchClear={handleSearchClear} // 검색 초기화 함수 전달
+                    handleCreateChatRoom={handleCreateChatRoom}
+                />
+                <RightComponent
+                    chatRoomVisible={chatRoomVisible}
+                    roomId={roomId}
+                    senderId={senderId}
+                    senderName={senderName}/>
+            </div>
         </div>
+
     );
 };
 
